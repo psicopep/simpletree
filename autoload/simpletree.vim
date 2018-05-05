@@ -57,9 +57,9 @@ function! s:new_tree()
   call s:save_edit_window()
   silent topleft vnew SimpleTree
   exe 'vertical resize ' . s:tree_window_width
-  set winfixwidth
+  setlocal winfixwidth
   let s:tree_buffer = bufnr('%')
-  set nobuflisted buftype=nofile noswapfile
+  setlocal nobuflisted buftype=nofile noswapfile
   call s:reset_tree(getcwd())
   call s:refresh_highlight()
   setlocal nomodifiable
@@ -78,7 +78,7 @@ function! s:show_tree()
   let l:tree_buffer = s:get_tree_buffer()
   silent topleft vsplit
   exe 'vertical resize ' . s:tree_window_width
-  set winfixwidth
+  setlocal winfixwidth
   exe 'silent buffer ' . l:tree_buffer
   call s:refresh_statusline()
   call s:refresh_highlight()
