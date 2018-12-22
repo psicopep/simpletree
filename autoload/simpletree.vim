@@ -16,6 +16,7 @@ let s:tree_window_width = exists('g:simpletree_width') ? g:simpletree_width : 40
 let s:show_hidden_files = exists('g:simpletree_show_hidden') ? g:simpletree_show_hidden : 0
 let s:use_arrows = exists('g:simpletree_use_arrows') ? g:simpletree_use_arrows
       \                                              : s:is_windows ? 0 : 1
+let s:close_on_esc = exists('g:simpletree_close_on_esc') ? g:simpletree_close_on_esc : 0
 
 " Public functions
 
@@ -71,6 +72,9 @@ function! s:new_tree()
   nnoremap <buffer> <silent> r :call <SID>reload_tree()<CR>
   nnoremap <buffer> <silent> za :call <SID>toggle_hidden_files()<CR>
   nnoremap <buffer> <silent> q :call simpletree#ToggleTree()<CR>
+  if s:close_on_esc
+    nnoremap <buffer> <silent> <Esc> :call simpletree#ToggleTree()<CR>
+  endif
 endfunction
 
 function! s:show_tree()
