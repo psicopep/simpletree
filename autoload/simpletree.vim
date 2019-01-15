@@ -69,7 +69,8 @@ function! s:new_tree()
   nnoremap <buffer> <silent> <S-CR> :call <SID>chg_root()<CR>
   nnoremap <buffer> <silent> <S-o> :call <SID>chg_root()<CR>
   nmap <buffer> <silent> - gg<CR>
-  nnoremap <buffer> <silent> r :call <SID>reload_tree()<CR>
+  nnoremap <buffer> <silent> r :call <SID>reload_tree(0)<CR>
+  nnoremap <buffer> <silent> R :call <SID>reload_tree(1)<CR>
   nnoremap <buffer> <silent> za :call <SID>toggle_hidden_files()<CR>
   nnoremap <buffer> <silent> q :call simpletree#ToggleTree()<CR>
   if s:close_on_esc
@@ -240,9 +241,9 @@ function! s:chg_root()
   endif
 endfunction
 
-function! s:reload_tree()
+function! s:reload_tree(cwd)
   setlocal modifiable
-  call s:reset_tree(s:root_dir)
+  call s:reset_tree(a:cwd ? getcwd() : s:root_dir)
   setlocal nomodifiable
 endfunction
 
