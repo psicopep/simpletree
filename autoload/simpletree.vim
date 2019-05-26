@@ -124,9 +124,9 @@ function! s:reset_tree(dir)
 endfunction
 
 function! s:list_dir(dir)
-  let l:list = glob(a:dir . s:sep . '*', 1, 1)
+  let l:list = s:glob(a:dir . s:sep . '*')
   if s:show_hidden_files
-    let l:list_dot = glob(a:dir . s:sep . '.[^.]*', 1, 1)
+    let l:list_dot = s:glob(a:dir . s:sep . '.[^.]*')
     let l:list = l:list_dot + l:list
   endif
   let l:dirs = []
@@ -141,6 +141,19 @@ function! s:list_dir(dir)
   call map(l:dirs, 'fnamemodify(v:val, ":t")')
   call map(l:files, 'fnamemodify(v:val, ":t")')
   return [l:dirs, l:files]
+endfunction
+
+function! s:glob(expr)
+  if has("patch-7.3-465")
+    let l:list = glob(a:expr, 1, 1)
+  elseif has("patch-7.2-051")
+    let l:str = glob(a:expr, 1)
+    let l:list = split(l:str, '\n')
+  else
+    let l:str = glob(a:expr)
+    let l:list = split(l:str, '\n')
+  endif
+  return l:list
 endfunction
 
 function! s:cd_or_edit()
